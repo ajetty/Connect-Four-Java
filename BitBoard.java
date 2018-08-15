@@ -49,7 +49,7 @@ public abstract class BitBoard {
 			return true;
 		else
 			return false;	
-	}
+	} 
 
 	private boolean checkAcross(long bitBoard) {
 
@@ -107,18 +107,5 @@ public abstract class BitBoard {
 		return tempBoard ^ bitBoard;
 	}
 	
-	private long removeInvalidMoves(long bitBoard, long[] bit) {
-		
-		long tempBoard = bitBoard;
-		
-		System.out.println(Long.toBinaryString(tempBoard));
-		
-		for(long x : bit) {
-			tempBoard = tempBoard ^ (1 << x);
-			System.out.println("For Each: " + Long.toBinaryString(tempBoard));
-		}
-		
-		return tempBoard;
-	}
 
 }
