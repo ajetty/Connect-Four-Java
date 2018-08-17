@@ -75,16 +75,16 @@ public class GUI {
 	 * int[] bitIndex elements correspond to game board move positions and bitboards used to
 	 * record player data.
 	 * 
-	 * 57 50 43 36 29 22 15 <--BUFFER/NO ACCESS
-	 * 58 51 44 37 30 23 16 <--TOP
-	 * 59 52 45 38 31 24 17 
+	 * 56 49 42 35 28 21 14 <--BUFFER/NO ACCESS
+	 * 57 50 43 36 29 22 15 <--TOP
+	 * 58 51 44 37 30 23 16 
+	 * 59 52 45 38 31 24 17   
 	 * 60 53 46 39 32 25 18   
 	 * 61 54 47 40 33 26 19   
-	 * 62 55 48 41 34 27 20   
-	 * 63 56 49 42 35 28 21 <--BOTTOM
+	 * 62 55 48 41 34 27 20 <--BOTTOM
 	 */
 	private void createBitIdIndex() {
-		int[] bitIndex = {58, 59, 60, 61, 62, 63, 51, 52, 53, 54, 55, 56, 44, 45, 46, 47, 48, 49, 37, 38, 39, 40, 41, 42, 30, 31, 32, 33, 34, 35, 23, 24, 25, 26, 27, 28, 16, 17, 18, 19, 20, 21};
+		int[] bitIndex = {57, 58, 59, 60, 61, 62, 50, 51, 52, 53, 54, 55, 43, 44, 45, 46, 47, 48, 36, 37, 38, 39, 40, 41, 29, 30, 31, 32, 33, 34, 22, 23, 24, 25, 26, 27, 15, 16, 17, 18, 19, 20};
 		
 		for(int x = 0; x < bitIndex.length; x++) {
 			boardSquares.get(x).getChildren().get(1).setId(Integer.toString(bitIndex[x]));
