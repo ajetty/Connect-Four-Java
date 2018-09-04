@@ -37,13 +37,15 @@ public class GameController {
 		playerOne.isTurnProperty().addListener(playerOneListener = new ChangeListener<Object>() {
 			@Override public void changed(ObservableValue<?> o, Object oldVal, Object newVal) {
 				if(playerOne.isTurnProperty().getValue() == false) {
-					long binaryValue = (long) Math.pow(2, gui.playerMoveProperty().get());
+					int intValue = gui.playerMoveProperty().get();
+					
+					long binaryValue = (long) Math.pow(2, intValue);
 					
 					//System.out.println("Binary Value: " + binaryValue + " " + Long.toBinaryString(binaryValue));
 					
 					long playerMove = playerOne.movePlayer(binaryValue, playerOne.getBitBoard(), playerTwo.getBitBoard());
 					
-					System.out.println(playerMove);
+					System.out.println("Player One: " + playerMove);
 					
 					if(playerMove > 0) {
 						playerOne.setBitBoard(playerMove);
@@ -62,11 +64,14 @@ public class GameController {
 		playerTwo.isTurnProperty().addListener(playerTwoListener = new ChangeListener<Object>() {
 			@Override public void changed(ObservableValue<?> o, Object oldVal, Object newVal) {
 				if(playerTwo.isTurnProperty().getValue() == false) {
-					long binaryValue = (long) Math.pow(2, gui.playerMoveProperty().get());
+					int intValue = gui.playerMoveProperty().get();
+					
+					
+					long binaryValue = (long) Math.pow(2, intValue);
 					
 					long playerMove = playerTwo.movePlayer(binaryValue, playerTwo.getBitBoard(), playerOne.getBitBoard());
 					
-					System.out.println(playerMove);
+					System.out.println("Player Two: " + playerMove);
 					
 					if(playerMove > 0) {
 						playerTwo.setBitBoard(playerMove);

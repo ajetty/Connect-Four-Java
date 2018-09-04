@@ -28,33 +28,25 @@ public abstract class BitBoard {
 		
 		tempBoard = drop(tempBoard, finalBoard);
 		
-		//System.out.println("tempBoard: " + tempBoard);
+		System.out.println("tempBoard: " + tempBoard);
 		
 		long tempBoard2 = tempBoard | finalBoard;
 		
-		//System.out.println("temp board2: " + tempBoard2);
+		System.out.println("temp board2: " + tempBoard2);
 		
 		if(tempBoard2 != finalBoard) {
-			return bitBoard1 ^ tempBoard;
+			return tempBoard;
 		}
 		else
 			return 0L;
 	}
 	
 	private long drop(long tempBoard, long finalBoard) {
-//		finalBoard = finalBoard & 0b1111110000000000000000000000000000000000000000000000000000000000L;
-//		
-//		if(finalBoard == 0)
-//			return tempBoard = 0b100000000000000000000000000000000000000000000000000000000000000L;
-//		
-//		long highest = Long.lowestOneBit(finalBoard) >> 1;
-//		
-//		
-//		return highest;
-		
-		
+
 		if(tempBoard <= 4611686018427387904L && tempBoard >= 144115188075855872L) {
 			finalBoard = finalBoard & 0b1111110000000000000000000000000000000000000000000000000000000000L;
+			
+			System.out.println("Final Board: " + finalBoard);
 			
 			if(finalBoard == 0)
 				return tempBoard = 0b100000000000000000000000000000000000000000000000000000000000000L;
@@ -96,9 +88,9 @@ public abstract class BitBoard {
 				return tempBoard = 0b100000000000000000000L;
 		}
 		
-		long highest = Long.lowestOneBit(finalBoard) >> 1;
+		long lowest = Long.lowestOneBit(finalBoard) >> 1;
 		
-		return highest;
+		return lowest;
 	}
 
 	public boolean checkWin(long bitBoard) {

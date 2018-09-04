@@ -97,14 +97,16 @@ public class GUI {
 		      if(e.getEventType() == MouseEvent.MOUSE_CLICKED){
 		    	  Circle circle = (Circle) e.getSource();
 		    	  setPlayerProperty(Integer.parseInt(circle.getId()));
+		    	  
 		      }
 		      if(e.getEventType() == MouseEvent.MOUSE_ENTERED){
 		    	  ((Shape) e.getTarget()).setStrokeWidth(5);
 		    	  ((Shape) e.getTarget()).setStroke(Color.BLUE);
 		      }
 		      if(e.getEventType() == MouseEvent.MOUSE_EXITED){
-		    	  ((Shape) e.getTarget()).setStroke(null);
+		    	  ((Shape) e.getTarget()).setStroke(null);    	  
 		      }
+		      
 		   } 
 	};
 	
@@ -116,29 +118,39 @@ public class GUI {
 		}
 	}
 	
-	public void updateBoard(long bitBoard, int player) {
-		String zeroes = Long.toString(Long.numberOfTrailingZeros(bitBoard));
+	public void updateBoard(long boardMove, int player) {
+		
+		
+		int boardMove2 = Long.numberOfTrailingZeros(boardMove);
+		
+		String move = Integer.toString(boardMove2);
 		
 		int index = 0;
 		
 		for(Group x : boardSquares) {
-			if(x.getChildren().get(1).getId().equals(zeroes)) {
-				index = boardSquares.indexOf(x);	
+			if(x.getChildren().get(1).getId().equals(move)) {
+				index = boardSquares.indexOf(x);
 			}
 		}
+		
+		System.out.println("Index: " + index);
 
 		//Each Group Id in ArrayList matches with index. 
 		if(player == 1) {
 			//We're getting the children of Group. 0 = rectangle 1 = circle
 			((Shape) boardSquares.get(index).getChildren().get(1)).setFill(Color.GREEN);
+			System.out.println("GREEN\n");
 		}
 		else {
 			((Shape) boardSquares.get(index).getChildren().get(1)).setFill(Color.RED);
-		}		
+			System.out.println("RED\n");
+		}
+		
 	}
 	
 	//Takes the int from int[] bitIndex and turns the value into a long that is set as the value of LongProperty playerProperty.
 	private void setPlayerProperty(int value) {
+		System.out.println("Value: " + value);
 		playerMoveProperty.setValue(value);
 	}
 	
