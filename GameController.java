@@ -27,32 +27,29 @@ public class GameController {
 		//long = G1G2G3G4G5G60 F1F2F3F4F5F60 E1E2E3E4E5E60 D1D2D3D4D5D60 C1C2C3C4C5C60 B1B2B3B4B5B60 A1A2A3A4A5A60 0000000 0000000 0
 			
 			
-		gui.playerMoveProperty().addListener(GUIListener = new ChangeListener<Object>() {
+		gui.isBoardProperty().addListener(GUIListener = new ChangeListener<Object>() {
 			@Override public void changed(ObservableValue<?> o, Object oldVal, Object newVal) {
 				playerOne.setIsTurnProperty();
 				playerTwo.setIsTurnProperty();
 			}
 		});
 		
+	
 		playerOne.isTurnProperty().addListener(playerOneListener = new ChangeListener<Object>() {
 			@Override public void changed(ObservableValue<?> o, Object oldVal, Object newVal) {
-				if(playerOne.isTurnProperty().getValue() == false) {
+				if(playerOne.isTurnProperty().getValue() == true) {
 					int intValue = gui.playerMoveProperty().get();
 					
 					long binaryValue = (long) Math.pow(2, intValue);
 					
-					//System.out.println("Binary Value: " + binaryValue + " " + Long.toBinaryString(binaryValue));
-					
 					long playerMove = playerOne.movePlayer(binaryValue, playerOne.getBitBoard(), playerTwo.getBitBoard());
-					
-					System.out.println("Player One: " + playerMove);
 					
 					if(playerMove > 0) {
 						playerOne.setBitBoard(playerMove);
-						System.out.println("Player one: " + Long.toBinaryString(playerOne.getBitBoard()));
 						gui.updateBoard(playerMove, 1);
 						gameOver = playerOne.checkWin(playerOne.getBitBoard());
 					}
+					
 				}
 				
 				if(gameOver == true) {
@@ -63,19 +60,15 @@ public class GameController {
 		
 		playerTwo.isTurnProperty().addListener(playerTwoListener = new ChangeListener<Object>() {
 			@Override public void changed(ObservableValue<?> o, Object oldVal, Object newVal) {
-				if(playerTwo.isTurnProperty().getValue() == false) {
+				if(playerTwo.isTurnProperty().getValue() == true) {
 					int intValue = gui.playerMoveProperty().get();
-					
 					
 					long binaryValue = (long) Math.pow(2, intValue);
 					
 					long playerMove = playerTwo.movePlayer(binaryValue, playerTwo.getBitBoard(), playerOne.getBitBoard());
 					
-					System.out.println("Player Two: " + playerMove);
-					
 					if(playerMove > 0) {
 						playerTwo.setBitBoard(playerMove);
-						System.out.println("Player two: " + Long.toBinaryString(playerTwo.getBitBoard()));
 						gui.updateBoard(playerMove, 2);
 						gameOver = playerTwo.checkWin(playerTwo.getBitBoard());
 					}
@@ -87,14 +80,14 @@ public class GameController {
 				}
 			}
 		});
-		
 	}
+	
 	
 	private void endGame() {
 		playerOne.isTurnProperty().removeListener(playerOneListener);
 		playerTwo.isTurnProperty().removeListener(playerTwoListener);
-		gui.playerMoveProperty().removeListener(GUIListener);
-		System.out.println("\nGAME OVER!");
+		gui.isBoardProperty().removeListener(GUIListener);
+		gui.gameOver();
 	}
 	
 

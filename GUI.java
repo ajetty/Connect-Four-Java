@@ -2,7 +2,9 @@ package connectFour;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -14,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
 
 public class GUI {
 
@@ -21,11 +24,14 @@ public class GUI {
 	private Scene scene;
 	private ArrayList<Group> boardSquares;
 	private IntegerProperty playerMoveProperty;
+	private BooleanProperty isBoardChange;
+	private boolean boardChange;
 	
 	public GUI() {
-		gameBoard = setBoard();
-		playerMoveProperty = new SimpleIntegerProperty();
-		scene = new Scene(gameBoard, 600, 600);
+		this.gameBoard = setBoard();
+		this.playerMoveProperty = new SimpleIntegerProperty();
+		this.isBoardChange = new SimpleBooleanProperty();
+		this.scene = new Scene(gameBoard, 600, 600);
 		eventHandler();
 	}
 	
@@ -91,20 +97,20 @@ public class GUI {
 		}
 	}
 	
-	EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() { 
+	EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() { 	
 		   @Override 
 		   public void handle(MouseEvent e) { 
 		      if(e.getEventType() == MouseEvent.MOUSE_CLICKED){
 		    	  Circle circle = (Circle) e.getSource();
 		    	  setPlayerProperty(Integer.parseInt(circle.getId()));
-		    	  
+		  		  setBoardProperty();
 		      }
 		      if(e.getEventType() == MouseEvent.MOUSE_ENTERED){
 		    	  ((Shape) e.getTarget()).setStrokeWidth(5);
 		    	  ((Shape) e.getTarget()).setStroke(Color.BLUE);
 		      }
 		      if(e.getEventType() == MouseEvent.MOUSE_EXITED){
-		    	  ((Shape) e.getTarget()).setStroke(null);    	  
+		    	  ((Shape) e.getTarget()).setStroke(null); 		    	 
 		      }
 		      
 		   } 
@@ -132,25 +138,33 @@ public class GUI {
 				index = boardSquares.indexOf(x);
 			}
 		}
-		
-		System.out.println("Index: " + index);
 
 		//Each Group Id in ArrayList matches with index. 
 		if(player == 1) {
 			//We're getting the children of Group. 0 = rectangle 1 = circle
 			((Shape) boardSquares.get(index).getChildren().get(1)).setFill(Color.GREEN);
-			System.out.println("GREEN\n");
 		}
 		else {
 			((Shape) boardSquares.get(index).getChildren().get(1)).setFill(Color.RED);
-			System.out.println("RED\n");
 		}
 		
 	}
 	
+	public void gameOver() {
+		Text gameOverTxt = new Text("Game Over");
+		gameBoard.add(gameOverTxt, 1, 8);
+	}
+	
+	private void setBoardProperty() {
+		isBoardChange.set(boardChange = !boardChange);
+	}
+	
+	public BooleanProperty isBoardProperty() {
+		return isBoardChange;
+	}
+	
 	//Takes the int from int[] bitIndex and turns the value into a long that is set as the value of LongProperty playerProperty.
 	private void setPlayerProperty(int value) {
-		System.out.println("Value: " + value);
 		playerMoveProperty.setValue(value);
 	}
 	

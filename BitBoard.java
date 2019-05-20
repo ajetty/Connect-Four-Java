@@ -5,20 +5,20 @@ public abstract class BitBoard {
 	/* A bit board corresponds to a long in the following way:   
 	 * 
 	 * 	 				 0  0  0  0  0  0  0  0 0<--Right Most Bit
-	 * 	 				 G6 F6 E6 D6 C6 B6 A6 0 0<--TOP
+	 * 	 				 G6 F6 E6 D6 C6 B6 A6 0 0<--TOP OF VISIBLE GAME BOARD
 	 * 	 				 G5 F5 E5 D5 C5 B5 A5 0 0 
 	 * 	 				 G4 F4 E4 D4 C4 B4 A4 0 0   
 	 * 	 				 G3 F3 E3 D3 C3 B3 A3 0 0  
 	 * 	 				 G2 F2 E2 D2 C2 B2 A2 0 0   
-	 * Left most bit-->0 G1 F1 E1 D1 C1 B1 A1 0 0<--BOTTOM
+	 * Left most bit-->0 G1 F1 E1 D1 C1 B1 A1 0 0<--BOTTOM OF VISIBLE GAME BOARD
 	 * 
-	 * 56 49 42 35 28 21 14 07 00<--BUFFER/NO ACCESS/Right Most Bit
-	 * 57 50 43 36 29 22 15 08 01<--TOP
-	 * 58 51 44 37 30 23 16 09 02
-	 * 59 52 45 38 31 24 17 10 03  
-	 * 60 53 46 39 32 25 18 11 04  
-	 * 61 54 47 40 33 26 19 12 05  
-	 * 62 55 48 41 34 27 20 13 06 <--BOTTOM
+	 * 					  56 49 42 35 28 21 14 07 00<--BUFFER/NO ACCESS/Right Most Bit
+	 * 					  57 50 43 36 29 22 15 08 01<--TOP OF VISIBLE GAME BOARD
+	 * 					  58 51 44 37 30 23 16 09 02
+	 * 					  59 52 45 38 31 24 17 10 03  
+	 * 					  60 53 46 39 32 25 18 11 04  
+	 * 					  61 54 47 40 33 26 19 12 05  
+	 * Left most bit-->63 62 55 48 41 34 27 20 13 06 <--BOTTOM OF VISIBLE GAME BOARD
 	 * 
 	 * long = 0G1G2G3G4G5G60 F1F2F3F4F5F60 E1E2E3E4E5E60 D1D2D3D4D5D60 C1C2C3C4C5C60 B1B2B3B4B5B60 A1A2A3A4A5A60 0000000 000000(0) 
 	 */
@@ -28,11 +28,7 @@ public abstract class BitBoard {
 		
 		tempBoard = drop(tempBoard, finalBoard);
 		
-		System.out.println("tempBoard: " + tempBoard);
-		
 		long tempBoard2 = tempBoard | finalBoard;
-		
-		System.out.println("temp board2: " + tempBoard2);
 		
 		if(tempBoard2 != finalBoard) {
 			return tempBoard;
@@ -45,8 +41,6 @@ public abstract class BitBoard {
 
 		if(tempBoard <= 4611686018427387904L && tempBoard >= 144115188075855872L) {
 			finalBoard = finalBoard & 0b1111110000000000000000000000000000000000000000000000000000000000L;
-			
-			System.out.println("Final Board: " + finalBoard);
 			
 			if(finalBoard == 0)
 				return tempBoard = 0b100000000000000000000000000000000000000000000000000000000000000L;
