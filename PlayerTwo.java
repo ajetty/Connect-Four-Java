@@ -20,8 +20,8 @@ public class PlayerTwo extends BitBoard{
 		return bitBoard;
 	}
 
-	public void setBitBoard(long bitBoard) {
-		this.bitBoard = bitBoard;
+	public void setBitBoard(long newMove) {
+		this.bitBoard = this.bitBoard ^ newMove;
 	}
 	
 	public void setIsTurnProperty() {

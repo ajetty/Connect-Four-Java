@@ -26,19 +26,73 @@ public abstract class BitBoard {
 	public long movePlayer(long tempBoard, long bitBoard1, long bitBoard2) {
 		long finalBoard = bitBoard1 ^ bitBoard2;
 		
-		System.out.println("final board: " + Long.toBinaryString(finalBoard));
+		tempBoard = drop(tempBoard, finalBoard);
+		
+		System.out.println("tempBoard: " + tempBoard);
 		
 		long tempBoard2 = tempBoard | finalBoard;
 		
-		System.out.println("temp board: " + Long.toBinaryString(tempBoard2));
+		System.out.println("temp board2: " + tempBoard2);
 		
 		if(tempBoard2 != finalBoard) {
-			return bitBoard1 ^ tempBoard;
+			return tempBoard;
 		}
 		else
 			return 0L;
 	}
 	
+	private long drop(long tempBoard, long finalBoard) {
+
+		if(tempBoard <= 4611686018427387904L && tempBoard >= 144115188075855872L) {
+			finalBoard = finalBoard & 0b1111110000000000000000000000000000000000000000000000000000000000L;
+			
+			System.out.println("Final Board: " + finalBoard);
+			
+			if(finalBoard == 0)
+				return tempBoard = 0b100000000000000000000000000000000000000000000000000000000000000L;
+		}
+		else if(tempBoard <= 36028797018963968L && tempBoard >= 1125899906842624L) {
+			finalBoard = finalBoard & 0b111111000000000000000000000000000000000000000000000000000L;
+			
+			if(finalBoard == 0)
+				return tempBoard = 0b10000000000000000000000000000000000000000000000000000000L;
+		}
+		else if(tempBoard <= 281474976710656L && tempBoard >= 8796093022208L) {
+			finalBoard = finalBoard & 0b11111100000000000000000000000000000000000000000000L;
+			
+			if(finalBoard == 0)
+				return tempBoard = 0b1000000000000000000000000000000000000000000000000L;
+		}
+		else if(tempBoard <= 2199023255552L && tempBoard >= 68719476736L) {
+			finalBoard = finalBoard & 0b1111110000000000000000000000000000000000000L;
+			
+			if(finalBoard == 0)
+				return tempBoard = 0b100000000000000000000000000000000000000000L;
+		}
+		else if(tempBoard <= 17179869184L && tempBoard >= 536870912L) {
+			finalBoard = finalBoard & 0b11111100000000000000000000000000000L;
+			
+			if(finalBoard == 0)
+				return tempBoard = 0b10000000000000000000000000000000000L;
+		}
+		else if(tempBoard <= 134217728L && tempBoard >= 4194304L) {
+			finalBoard = finalBoard & 0b1111110000000000000000000000L;
+			
+			if(finalBoard == 0)
+				return tempBoard = 0b1000000000000000000000000000L;
+		}
+		else if(tempBoard <= 1048576L && tempBoard >= 32768L) {
+			finalBoard = finalBoard & 0b111111000000000000000L;
+			
+			if(finalBoard == 0)
+				return tempBoard = 0b100000000000000000000L;
+		}
+		
+		long lowest = Long.lowestOneBit(finalBoard) >> 1;
+		
+		return lowest;
+	}
+
 	public boolean checkWin(long bitBoard) {
 		boolean isAcross = checkAcross(bitBoard);
 		boolean isUpDown = checkUpDown(bitBoard);
