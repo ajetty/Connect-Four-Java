@@ -1,0 +1,60 @@
+@font-face {
+    -fx-alignment: center;
+    src: url('fonts/Pacifico-Regular.ttf');
+}
+
+.root {
+    -fx-background-color: #7b965f;
+}
+
+.button {
+    -fx-font-family: Pacifico Regular;
+    -fx-background-color:
+            linear-gradient(#cf9a9a 0%, #ecd7d7 50%, #cf9a9a 100%),
+            linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #af2b37;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+    -fx-border-radius: 30;
+    -fx-border-color: linear-gradient(to right, #af2b37, #cf755b, #af2b37);
+    -fx-border-width: 2;
+}
+
+#backgroundColor {
+    -fx-max-width: 770;
+    -fx-max-height: 570;
+    -fx-background-color: #ecd7d7;
+    -fx-background-radius: 20px;
+    -fx-border-color:
+            linear-gradient(to right, #af2b37, #cf755b, #af2b37);
+    -fx-border-width: 10px;
+    -fx-border-radius: 15px;
+}
+
+#menu {
+    -fx-background-color: #ecd7d7;
+    -fx-background-radius: 20px;
+    -fx-border-color:
+            linear-gradient(to right, #af2b37, #cf755b, #af2b37);
+    -fx-border-width: 5px;
+    -fx-border-radius: 15px;
+}
+
+.button:hover {
+    -fx-text-fill: #8c222c;
+}
+
+.button:pressed {
+    -fx-text-fill: #2f57d0;
+    -fx-background-color:
+            linear-gradient(to right, #af2b37, #cf755b, #af2b37),
+            #dbb3b3;
+    -fx-effect: innershadow( gaussian , rgba(97, 0, 0, 0.5), 15 , 0.6, 0, 0);
+
+}
+
+
+

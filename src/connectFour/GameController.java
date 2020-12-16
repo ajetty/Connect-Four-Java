@@ -3,10 +3,12 @@ package connectFour;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 
 public class GameController {
 	
-	private GUI gui;
+	public GUI gui;
 	private PlayerOne playerOne;
 	private PlayerTwo playerTwo;
 	private boolean gameOver;
@@ -14,30 +16,47 @@ public class GameController {
 	private ChangeListener<Object> playerTwoListener;
 	private ChangeListener<Object> GUIListener;
 
+	Stage primaryStage = new Stage();
+
 	
 	public GameController() {
 		gui = new GUI();
 		playerOne = new PlayerOne();
 		playerTwo = new PlayerTwo();
-		gameOver = false;	
+		gameOver = false;
+		gameLoop();
+	}
+
+	public void newGameLoop() {
+		playerOne = new PlayerOne();
+		playerTwo = new PlayerTwo();
+		gameOver = false;
+		gameLoop();
 	}
 	
 	public void gameLoop() {
 
 		//long = G1G2G3G4G5G60 F1F2F3F4F5F60 E1E2E3E4E5E60 D1D2D3D4D5D60 C1C2C3C4C5C60 B1B2B3B4B5B60 A1A2A3A4A5A60 0000000 0000000 0
-			
-			
+
 		gui.isBoardProperty().addListener(GUIListener = new ChangeListener<Object>() {
 			@Override public void changed(ObservableValue<?> o, Object oldVal, Object newVal) {
 				playerOne.setIsTurnProperty();
 				playerTwo.setIsTurnProperty();
 			}
 		});
+
+
+		gui.restartBtn.setOnAction(e -> {
+			gui = new GUI();
+			newGameLoop();
+            primaryStage.setScene(getScene());
+		});
 		
 	
 		playerOne.isTurnProperty().addListener(playerOneListener = new ChangeListener<Object>() {
 			@Override public void changed(ObservableValue<?> o, Object oldVal, Object newVal) {
 				if(playerOne.isTurnProperty().getValue() == true) {
+
 					int intValue = gui.playerMoveProperty().get();
 					
 					long binaryValue = (long) Math.pow(2, intValue);
@@ -61,6 +80,7 @@ public class GameController {
 		playerTwo.isTurnProperty().addListener(playerTwoListener = new ChangeListener<Object>() {
 			@Override public void changed(ObservableValue<?> o, Object oldVal, Object newVal) {
 				if(playerTwo.isTurnProperty().getValue() == true) {
+
 					int intValue = gui.playerMoveProperty().get();
 					
 					long binaryValue = (long) Math.pow(2, intValue);
@@ -81,15 +101,19 @@ public class GameController {
 			}
 		});
 	}
-	
-	
+
+
 	private void endGame() {
-		playerOne.isTurnProperty().removeListener(playerOneListener);
-		playerTwo.isTurnProperty().removeListener(playerTwoListener);
 		gui.isBoardProperty().removeListener(GUIListener);
 		gui.gameOver();
 	}
-	
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+		primaryStage.setTitle("Connect Four");
+		primaryStage.setScene(getScene());
+		primaryStage.show();
+	}
 
 	public Scene getScene() {
 		return gui.getScene();

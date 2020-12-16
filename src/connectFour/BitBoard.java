@@ -90,8 +90,8 @@ public abstract class BitBoard {
 	public boolean checkWin(long bitBoard) {
 		boolean isAcross = checkAcross(bitBoard);
 		boolean isUpDown = checkUpDown(bitBoard);
-		boolean isDiagnol = checkDiagnol(bitBoard);
-		boolean isDiagnol2 = checkDiagnol2(bitBoard);
+		boolean isDiagnol = checkDiagonal(bitBoard);
+		boolean isDiagnol2 = checkDiagonal2(bitBoard);
 		
 		if(isAcross == true)
 			return true;
@@ -123,7 +123,7 @@ public abstract class BitBoard {
 
 	}
 	
-	private boolean checkDiagnol(long bitBoard) {
+	private boolean checkDiagonal(long bitBoard) {
 		
 		long tempBoard = bitBoard >>> 8;
 		tempBoard = tempBoard & bitBoard;
@@ -139,7 +139,7 @@ public abstract class BitBoard {
 			return false;
 	}
 	
-	private boolean checkDiagnol2(long bitBoard) {
+	private boolean checkDiagonal2(long bitBoard) {
 		
 		long tempBoard = bitBoard >> 6;
 		tempBoard = tempBoard & bitBoard;
